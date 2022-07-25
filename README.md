@@ -54,6 +54,7 @@ lualine_x = {
 ```
 
 # TODO
+- [ ] Mouse support (Neovim Nightly)
 - [x] Optimize startup speed
 - [ ] Add different highlights
 - [ ] Add custom configuration options
