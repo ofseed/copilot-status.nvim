@@ -11,7 +11,13 @@ local Status = {
   None = "",
 }
 
+
+local function is_loaded()
+  return vim.g.loaded_copilot == 1
+end
+
 local function is_enabled()
+  if not is_loaded() then return false end
   if vim.fn["copilot#Enabled"]() == 1 then
     return true
   else
@@ -25,11 +31,11 @@ function M:init(options)
   self.inited = false
   self.is_enabled = is_enabled
   self.symbols = symbols
-  self.running_agent = vim.fn['copilot#RunningAgent']()
+  self.running_agent = is_loaded() and vim.fn['copilot#RunningAgent']() or nil
 end
 
 function M:copilot_status()
-  local agent = vim.fn['copilot#RunningAgent']()
+  local agent = self.running_agent or is_loaded() and vim.fn['copilot#RunningAgent']() or nil
   if not agent then return 'no agent' end
   local requests = agent.requests or {}
 
