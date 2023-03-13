@@ -30,7 +30,14 @@ Plug '1478zhcy/lualine-copilot'
 require("lualine").setup {
   sections = {
     lualine_x = {
-      "copilot"
+      {
+        "copilot",
+        -- default is true.
+        show_running = true,
+        symbols = {
+          running = "🚀",
+        }
+      },
     }
   }
 }

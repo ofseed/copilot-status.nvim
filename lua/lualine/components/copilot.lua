@@ -8,16 +8,16 @@ local symbols = {
 
 local Status = {
   Running = "running",
-  None = "",
+  Idle = "",
 }
 
-
-local function is_loaded()
+-- cond = M.copilot_is_loaded
+M.copilot_is_loaded = function()
   return vim.g.loaded_copilot == 1
 end
 
 local function is_enabled()
-  if not is_loaded() then return false end
+  if not M.copilot_is_loaded() then return false end
   if vim.fn["copilot#Enabled"]() == 1 then
     return true
   else
@@ -25,18 +25,20 @@ local function is_enabled()
   end
 end
 
-
 function M:init(options)
   M.super.init(self, options)
+  self.options = self.options or {}
   self.inited = false
   self.is_enabled = is_enabled
-  self.symbols = symbols
-  self.running_agent = is_loaded() and vim.fn['copilot#RunningAgent']() or nil
+  self.symbols = vim.tbl_deep_extend("keep", self.options.symbols or {}, symbols)
+  -- show copilot running status, default: true
+  self.show_running = self.options.show_running ~= false and true or false
 end
 
 function M:copilot_status()
-  local agent = self.running_agent or is_loaded() and vim.fn['copilot#RunningAgent']() or nil
-  if not agent then return 'no agent' end
+  local agent = M.copilot_is_loaded() and vim.fn['copilot#RunningAgent']() or nil
+  if not agent then return Status.Idle end
+  -- most of the time, requests is just empty dict.
   local requests = agent.requests or {}
 
   -- requests is dict with number as index, get status from those requests.
@@ -46,19 +48,20 @@ function M:copilot_status()
       return Status.Running
     end
   end
+  return Status.Idle
 end
 
 function M:update_status()
   if self.inited then
     if self.is_enabled() then
       -- return symbols.enabled
-      local status = self:copilot_status()
+      local status = not self.show_running and Status.Idle or self:copilot_status()
       if status == Status.Running then
-        return symbols.running
+        return self.symbols.running
       end
-      return symbols.enabled
+      return self.symbols.enabled
     else
-      return symbols.disabled
+      return self.symbols.disabled
     end
   else
     self.inited = true
