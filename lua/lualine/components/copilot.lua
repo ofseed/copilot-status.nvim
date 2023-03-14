@@ -13,10 +13,7 @@ local symbols = {
 ---Check if copilot is enabled
 ---@return boolean
 local function enabled()
-  if not vim.g.loaded_copilot == 1 then
-    return false
-  end
-  if vim.fn["copilot#Enabled"]() == 1 then
+  if vim.g.loaded_copilot == 1 and vim.fn["copilot#Enabled"]() == 1 then
     return true
   else
     return false
@@ -54,7 +51,7 @@ end
 function M:update_status()
   if enabled() then
     -- return symbols.enabled
-    local status = not self.show_running and "idle" or running_status()
+    local status = self.show_running and running_status() or "idle"
     if status == "running" then
       return self.symbols.running
     end
