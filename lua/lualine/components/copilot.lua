@@ -3,7 +3,7 @@ local M = require("lualine.component"):extend()
 local symbols = {
   enabled = " ", -- f113
   disabled = " ", -- f05e
-  running = " "
+  running = " ",
 }
 
 local Status = {
@@ -17,7 +17,9 @@ M.copilot_is_loaded = function()
 end
 
 local function is_enabled()
-  if not M.copilot_is_loaded() then return false end
+  if not M.copilot_is_loaded() then
+    return false
+  end
   if vim.fn["copilot#Enabled"]() == 1 then
     return true
   else
@@ -36,8 +38,10 @@ function M:init(options)
 end
 
 function M:copilot_status()
-  local agent = M.copilot_is_loaded() and vim.fn['copilot#RunningAgent']() or nil
-  if not agent then return Status.Idle end
+  local agent = M.copilot_is_loaded() and vim.fn["copilot#RunningAgent"]() or nil
+  if not agent then
+    return Status.Idle
+  end
   -- most of the time, requests is just empty dict.
   local requests = agent.requests or {}
 
