@@ -6,6 +6,7 @@ local M = require("lualine.component"):extend()
 
 ---@class CopilotComponentOptions
 local default_options = {
+  ---@class CopilotSymbols
   symbols = {
     enabled = " ",
     disabled = " ",
@@ -48,8 +49,10 @@ end
 ---@param options CopilotComponentOptions
 function M:init(options)
   M.super.init(self, options)
+  ---@type CopilotComponentOptions
   self.options = vim.tbl_deep_extend("force", default_options, options or {})
 
+  -- Setup options
   self.symbols = self.options.symbols
   self.show_running = self.options.show_running
 end
