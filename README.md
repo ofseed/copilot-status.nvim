@@ -1,6 +1,7 @@
 # lualine-copilot
 
-A simple lualine component to show github copilot status.
+A lualine component to show github copilot status,
+you can toggle the enabled state by clicking
 
 # Screenshots
 
@@ -12,19 +13,47 @@ Copilot disabled
 
 # Installation
 
+## lazy.nvim
+
+```lua
+-- lua
+{ "ofseed/lualine-copilot" }
+```
+
 ## [packer.nvim](https://github.com/wbthomason/packer.nvim)
 ```lua
 -- lua
-use { "1478zhcy/lualine-copilot" }
+use { "ofseed/lualine-copilot" }
 ```
 
 ## [vim-plug](https://github.com/junegunn/vim-plug)
 ```vim
 " vimscript
-Plug '1478zhcy/lualine-copilot'
+Plug 'ofseed/lualine-copilot'
 ```
 
 # Usage
+Default values for lualine configuration is
+```lua
+lualine_x = {
+  'encoding',
+  'fileformat',
+  'filetype'
+}
+```
+So I recommend that you can add it to this table and arrange them in a reasonable order.
+My configuration is
+```lua
+lualine_x = {
+  "copilot",
+  "filetype",
+  "fileformat",
+  "encoding",
+},
+```
+
+Or you can custom icons.
+
 ```lua
 -- lua
 require("lualine").setup {
@@ -43,24 +72,6 @@ require("lualine").setup {
   }
 }
 ```
-Default values for lualine configuration is
-```lua
-lualine_x = {
-  'encoding',
-  'fileformat',
-  'filetype'
-}
-```
-So I recommend that you can add it to this table and arrange them in a reasonable order. My configuration is
-```lua
-lualine_x = {
-  "copilot",
-  "filetype",
-  "fileformat",
-  "encoding",
-},
-```
-
 # TODO
 - [x] Mouse support (Neovim Nightly)
 - [x] Optimize startup speed
