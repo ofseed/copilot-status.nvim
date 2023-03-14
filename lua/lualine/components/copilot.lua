@@ -10,13 +10,8 @@ local symbols = {
   running = " ",
 }
 
--- cond = M.copilot_is_loaded
-M.copilot_is_loaded = function()
-  return vim.g.loaded_copilot == 1
-end
-
 local function is_enabled()
-  if not M.copilot_is_loaded() then
+  if not vim.g.loaded_copilot == 1 then
     return false
   end
   if vim.fn["copilot#Enabled"]() == 1 then
@@ -39,7 +34,7 @@ end
 ---Show copilot status
 ---@return CopilotStatus
 function M:copilot_status()
-  local agent = M.copilot_is_loaded() and vim.fn["copilot#RunningAgent"]() or nil
+  local agent = vim.g.loaded_copilot == 1 and vim.fn["copilot#RunningAgent"]() or nil
   if not agent then
     return "idle"
   end
