@@ -10,7 +10,9 @@ local symbols = {
   running = " ",
 }
 
-local function is_enabled()
+---Check if copilot is enabled
+---@return boolean
+local function enabled()
   if not vim.g.loaded_copilot == 1 then
     return false
   end
@@ -45,7 +47,6 @@ function M:init(options)
   M.super.init(self, options)
   self.options = self.options or {}
   self.inited = false
-  self.is_enabled = is_enabled
   self.symbols = vim.tbl_deep_extend("keep", self.options.symbols or {}, symbols)
   -- show copilot running status, default: true
   self.show_running = self.options.show_running ~= false and true or false
@@ -53,7 +54,7 @@ end
 
 function M:update_status()
   if self.inited then
-    if self.is_enabled() then
+    if enabled() then
       -- return symbols.enabled
       local status = not self.show_running and "idle" or running_status()
       if status == "running" then
