@@ -46,27 +46,21 @@ end
 function M:init(options)
   M.super.init(self, options)
   self.options = self.options or {}
-  self.inited = false
   self.symbols = vim.tbl_deep_extend("keep", self.options.symbols or {}, symbols)
   -- show copilot running status, default: true
   self.show_running = self.options.show_running ~= false and true or false
 end
 
 function M:update_status()
-  if self.inited then
-    if enabled() then
-      -- return symbols.enabled
-      local status = not self.show_running and "idle" or running_status()
-      if status == "running" then
-        return self.symbols.running
-      end
-      return self.symbols.enabled
-    else
-      return self.symbols.disabled
+  if enabled() then
+    -- return symbols.enabled
+    local status = not self.show_running and "idle" or running_status()
+    if status == "running" then
+      return self.symbols.running
     end
+    return self.symbols.enabled
   else
-    self.inited = true
-    return
+    return self.symbols.disabled
   end
 end
 
