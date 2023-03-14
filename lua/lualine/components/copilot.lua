@@ -4,10 +4,14 @@ local M = require("lualine.component"):extend()
 ---| '"running"' # copilot is running
 ---| '"idle"' # copilot is idle
 
-local symbols = {
-  enabled = " ", -- f113
-  disabled = " ", -- f05e
-  running = " ",
+---@class CopilotComponentOptions
+local default_options = {
+  symbols = {
+    enabled = " ",
+    disabled = " ",
+    running = " ",
+  },
+  show_running = true,
 }
 
 ---Check if copilot is enabled
@@ -40,12 +44,14 @@ local function running_status()
   return "idle"
 end
 
+---Initialize component
+---@param options CopilotComponentOptions
 function M:init(options)
   M.super.init(self, options)
-  self.options = self.options or {}
-  self.symbols = vim.tbl_deep_extend("keep", self.options.symbols or {}, symbols)
-  -- show copilot running status, default: true
-  self.show_running = self.options.show_running ~= false and true or false
+  self.options = vim.tbl_deep_extend("force", default_options, options or {})
+
+  self.symbols = self.options.symbols
+  self.show_running = self.options.show_running
 end
 
 function M:update_status()
