@@ -45,9 +45,21 @@ local function running_status()
   return "idle"
 end
 
+-- Toggle copilot
+local function toggle()
+  if enabled() then
+    vim.b.copilot_enabled = 0
+  else
+    vim.b.copilot_enabled = nil
+  end
+end
+
 ---Initialize component
 ---@param options CopilotComponentOptions
 function M:init(options)
+  -- Setup click handler
+  options.on_click = toggle
+
   M.super.init(self, options)
   ---@type CopilotComponentOptions
   self.options = vim.tbl_deep_extend("force", default_options, options or {})

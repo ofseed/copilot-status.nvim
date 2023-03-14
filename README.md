@@ -35,6 +35,7 @@ require("lualine").setup {
         -- default is true.
         show_running = true,
         symbols = {
+          -- default is " "
           running = "🚀",
         }
       },
@@ -61,9 +62,9 @@ lualine_x = {
 ```
 
 # TODO
-- [ ] Mouse support (Neovim Nightly)
+- [x] Mouse support (Neovim Nightly)
 - [x] Optimize startup speed
 - [ ] Add different highlights
-- [ ] Add custom configuration options
+- [x] Add custom configuration options
 - [x] Change the logic for getting status information
 - [ ] Show offline status
