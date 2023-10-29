@@ -28,6 +28,19 @@ function M:init(options)
   end
 
   M.super.init(self, options)
+
+  -- For backwards compatibility
+  if options.symbols then
+    if options.symbols.enabled then
+      options.symbols.status = options.symbols.status or {}
+      options.symbols.status.enabled = options.symbols.enabled
+    end
+    if options.symbols.disabled then
+      options.symbols.status = options.symbols.status or {}
+      options.symbols.status.disabled = options.symbols.disabled
+    end
+  end
+
   self.options = vim.tbl_deep_extend("force", default_options, options or {})
 
   -- Setup options
