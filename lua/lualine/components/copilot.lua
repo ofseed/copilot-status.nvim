@@ -16,20 +16,17 @@ local default_options = {
   show_running = true,
 }
 
--- Toggle copilot
-local function toggle()
-  if copilot.get_status() == "enabled" then
-    vim.b.copilot_enabled = 0
-  else
-    vim.b.copilot_enabled = nil
-  end
-end
-
 ---Initialize component
 ---@param options CopilotComponentOptions
 function M:init(options)
   -- Setup click handler
-  options.on_click = toggle
+  options.on_click = function()
+    if copilot.get_status() == "enabled" then
+      vim.b.copilot_enabled = 0
+    else
+      vim.b.copilot_enabled = nil
+    end
+  end
 
   M.super.init(self, options)
   ---@type CopilotComponentOptions
