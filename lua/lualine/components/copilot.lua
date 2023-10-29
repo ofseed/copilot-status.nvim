@@ -5,7 +5,6 @@ local M = require("lualine.component"):extend()
 ---@class CopilotComponentOptions
 ---@field on_click function inherit from lualine.component
 local default_options = {
-  ---@class CopilotSymbols
   symbols = {
     status = {
       enabled = " ",
@@ -29,7 +28,6 @@ function M:init(options)
   end
 
   M.super.init(self, options)
-  ---@type CopilotComponentOptions
   self.options = vim.tbl_deep_extend("force", default_options, options or {})
 
   -- Setup options
