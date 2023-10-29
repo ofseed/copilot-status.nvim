@@ -3,6 +3,7 @@ local copilot = require "copilot-status"
 local M = require("lualine.component"):extend()
 
 ---@class CopilotComponentOptions
+---@field on_click function inherit from lualine.component
 local default_options = {
   ---@class CopilotSymbols
   symbols = {
