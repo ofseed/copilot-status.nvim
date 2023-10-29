@@ -42,21 +42,17 @@ function M:init(options)
   end
 
   self.options = vim.tbl_deep_extend("force", default_options, options or {})
-
-  -- Setup options
-  self.symbols = self.options.symbols
-  self.show_running = self.options.show_running
 end
 
 function M:update_status()
   if copilot.get_status() == "enabled" then
     -- return symbols.enabled
-    if self.show_running and copilot.is_running() then
-      return self.symbols.status.running
+    if self.options.show_running and copilot.is_running() then
+      return self.options.symbols.status.running
     end
-    return self.symbols.status.enabled
+    return self.options.symbols.status.enabled
   else
-    return self.symbols.status.disabled
+    return self.options.symbols.status.disabled
   end
 end
 
