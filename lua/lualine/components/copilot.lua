@@ -8,9 +8,11 @@ local M = require("lualine.component"):extend()
 local default_options = {
   ---@class CopilotSymbols
   symbols = {
-    enabled = " ",
-    disabled = " ",
-    running = " ",
+    status = {
+      enabled = " ",
+      disabled = " ",
+      running = " ",
+    },
   },
   show_running = true,
 }
@@ -74,11 +76,11 @@ function M:update_status()
     -- return symbols.enabled
     local status = self.show_running and running_status() or "idle"
     if status == "running" then
-      return self.symbols.running
+      return self.symbols.status.running
     end
-    return self.symbols.enabled
+    return self.symbols.status.enabled
   else
-    return self.symbols.disabled
+    return self.symbols.status.disabled
   end
 end
 
