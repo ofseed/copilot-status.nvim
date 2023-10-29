@@ -1,4 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
-  "diagnostics.globals": ["vim"]
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "library": ["$VIMRUNTIME", "${3rd}/luv/library"],
+    "ignoreDir": ["lua/snippets"]
+  }
 }
