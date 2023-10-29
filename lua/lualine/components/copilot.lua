@@ -30,6 +30,7 @@ local function get_spinner(spinners)
 end
 
 ---Initialize component
+---@override
 ---@param options CopilotComponentOptions
 function M:init(options)
   -- Setup click handler
@@ -58,6 +59,7 @@ function M:init(options)
   self.options = vim.tbl_deep_extend("force", default_options, options or {})
 end
 
+---@override
 function M:update_status()
   if copilot.get_status() == "enabled" then
     -- return symbols.enabled
