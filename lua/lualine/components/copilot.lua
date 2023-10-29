@@ -4,10 +4,6 @@ local M = require("lualine.component"):extend()
 ---| '"enabled"' # copilot is enabled
 ---| '"disabled"' # copilot is disabled
 
----@alias CopilotRunningStatus string
----| '"running"' # copilot is running
----| '"idle"' # copilot is idle
-
 ---@class CopilotComponentOptions
 local default_options = {
   ---@class CopilotSymbols
@@ -32,11 +28,11 @@ local function get_status()
 end
 
 ---Show copilot running status
----@return CopilotRunningStatus
-local function running_status()
+---@return boolean
+local function is_running()
   local agent = vim.g.loaded_copilot == 1 and vim.fn["copilot#RunningAgent"]() or nil
   if not agent then
-    return "idle"
+    return false
   end
   -- most of the time, requests is just empty dict.
   local requests = agent.requests or {}
@@ -45,10 +41,10 @@ local function running_status()
   for _, req in pairs(requests) do
     local req_status = req.status
     if req_status == "running" then
-      return "running"
+      return true
     end
   end
-  return "idle"
+  return false
 end
 
 -- Toggle copilot
@@ -78,8 +74,7 @@ end
 function M:update_status()
   if get_status() == "enabled" then
     -- return symbols.enabled
-    local status = self.show_running and running_status() or "idle"
-    if status == "running" then
+    if self.show_running and is_running() then
       return self.symbols.status.running
     end
     return self.symbols.status.enabled
