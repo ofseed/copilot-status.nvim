@@ -1,5 +1,9 @@
 local M = require("lualine.component"):extend()
 
+---@alias CopilotStatus string
+---| '"enabled"' # copilot is enabled
+---| '"disabled"' # copilot is disabled
+
 ---@alias CopilotRunningStatus string
 ---| '"running"' # copilot is running
 ---| '"idle"' # copilot is idle
@@ -18,12 +22,12 @@ local default_options = {
 }
 
 ---Check if copilot is enabled
----@return boolean
-local function enabled()
+---@return CopilotStatus
+local function get_status()
   if vim.g.loaded_copilot == 1 and vim.fn["copilot#Enabled"]() == 1 then
-    return true
+    return "enabled"
   else
-    return false
+    return "disabled"
   end
 end
 
@@ -49,7 +53,7 @@ end
 
 -- Toggle copilot
 local function toggle()
-  if enabled() then
+  if get_status() == "enabled" then
     vim.b.copilot_enabled = 0
   else
     vim.b.copilot_enabled = nil
@@ -72,7 +76,7 @@ function M:init(options)
 end
 
 function M:update_status()
-  if enabled() then
+  if get_status() == "enabled" then
     -- return symbols.enabled
     local status = self.show_running and running_status() or "idle"
     if status == "running" then
