@@ -76,9 +76,5 @@ require("lualine").setup {
 }
 ```
 # TODO
-- [x] Mouse support (Neovim Nightly)
-- [x] Optimize startup speed
 - [ ] Add different highlights
-- [x] Add custom configuration options
-- [x] Change the logic for getting status information
 - [ ] Show offline status
