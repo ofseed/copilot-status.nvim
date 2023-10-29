@@ -59,14 +59,17 @@ Or you can custom icons.
 require("lualine").setup {
   sections = {
     lualine_x = {
+      -- Options with default values
       {
         "copilot",
-        -- default is true.
         show_running = true,
         symbols = {
-          -- default is " "
-          running = "🚀",
-        }
+          status = {
+            enabled = " ",
+            disabled = " ",
+          },
+          spinners = require("copilot-status.spinners").dots,
+        },
       },
     }
   }

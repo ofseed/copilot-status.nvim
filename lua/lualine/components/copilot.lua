@@ -9,11 +9,25 @@ local default_options = {
     status = {
       enabled = " ",
       disabled = " ",
-      running = " ",
     },
+    spinners = require("copilot-status.spinners").dots,
   },
   show_running = true,
 }
+
+local spinner_count = 1
+
+---Return a spinner from the list of spinners
+---@param spinners table
+---@return string
+local function get_spinner(spinners)
+  local spinner = spinners[spinner_count]
+  spinner_count = spinner_count + 1
+  if spinner_count > #spinners then
+    spinner_count = 1
+  end
+  return spinner
+end
 
 ---Initialize component
 ---@param options CopilotComponentOptions
@@ -48,7 +62,7 @@ function M:update_status()
   if copilot.get_status() == "enabled" then
     -- return symbols.enabled
     if self.options.show_running and copilot.is_running() then
-      return self.options.symbols.status.running
+      return get_spinner(self.options.symbols.spinners)
     end
     return self.options.symbols.status.enabled
   else
