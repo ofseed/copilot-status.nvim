@@ -1,4 +1,4 @@
-# lualine-copilot
+# copilot-status.nvim
 
 A lualine component to show github copilot status,
 you can toggle the enabled state by clicking
@@ -17,19 +17,19 @@ Copilot disabled
 
 ```lua
 -- lua
-{ "ofseed/lualine-copilot" }
+{ "ofseed/copilot-status.nvim" }
 ```
 
 ## [packer.nvim](https://github.com/wbthomason/packer.nvim)
 ```lua
 -- lua
-use { "ofseed/lualine-copilot" }
+use { "ofseed/copilot-status" }
 ```
 
 ## [vim-plug](https://github.com/junegunn/vim-plug)
 ```vim
 " vimscript
-Plug 'ofseed/lualine-copilot'
+Plug 'ofseed/copilot-status'
 ```
 
 # Usage
