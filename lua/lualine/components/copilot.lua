@@ -59,8 +59,16 @@ function M:init(options)
   self.options = vim.tbl_deep_extend("force", default_options, options or {})
 end
 
+local inited = false
+
 ---@override
 function M:update_status()
+  -- To avoid dragging the startup time
+  if not inited then
+    inited = true
+    return self.options.symbols.status.disabled
+  end
+
   if copilot.get_status() == "enabled" then
     -- return symbols.enabled
     if self.options.show_running and copilot.is_running() then
