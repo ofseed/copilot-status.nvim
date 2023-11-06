@@ -29,6 +29,9 @@ local function get_spinner(spinners)
   return spinner
 end
 
+-- Whether copilot is attached to a buffer
+local attached = false
+
 ---Initialize component
 ---@override
 ---@param options CopilotComponentOptions
@@ -57,15 +60,26 @@ function M:init(options)
   end
 
   self.options = vim.tbl_deep_extend("force", default_options, options or {})
-end
 
-local inited = false
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("copilot-status", {}),
+    desc = "Update copilot attached status",
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client and client.name == "copilot" then
+        attached = true
+        return true
+      end
+      return false
+    end,
+  })
+end
 
 ---@override
 function M:update_status()
-  -- To avoid dragging the startup time
-  if not inited then
-    inited = true
+  -- All copilot API calls are blocking before copilot is attached,
+  -- To avoid blocking the startup time, we check if copilot is attached
+  if not attached then
     return self.options.symbols.status.disabled
   end
 
