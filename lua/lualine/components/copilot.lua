@@ -83,11 +83,9 @@ function M:update_status()
     return self.options.symbols.status.disabled
   end
 
-  if copilot.get_status() == "enabled" then
-    -- return symbols.enabled
-    if self.options.show_running and copilot.is_running() then
-      return get_spinner(self.options.symbols.spinners)
-    end
+  if self.options.show_running and copilot.is_running() then
+    return get_spinner(self.options.symbols.spinners)
+  elseif copilot.get_status() == "enabled" then
     return self.options.symbols.status.enabled
   else
     return self.options.symbols.status.disabled
