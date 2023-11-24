@@ -1,16 +1,12 @@
 local M = {}
 
----@alias CopilotStatus string
----| '"enabled"' # copilot is enabled
----| '"disabled"' # copilot is disabled
-
 ---Check if copilot is enabled
----@return CopilotStatus
-M.get_status = function()
+---@return boolean
+M.is_enabled = function()
   if vim.g.loaded_copilot == 1 and vim.fn["copilot#Enabled"]() == 1 then
-    return "enabled"
+    return true
   else
-    return "disabled"
+    return false
   end
 end
 

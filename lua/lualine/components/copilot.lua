@@ -38,7 +38,7 @@ local attached = false
 function M:init(options)
   -- Setup click handler
   options.on_click = function()
-    if copilot.get_status() == "enabled" then
+    if copilot.is_enabled() then
       vim.b.copilot_enabled = 0
     else
       vim.b.copilot_enabled = nil
@@ -85,7 +85,7 @@ function M:update_status()
 
   if self.options.show_running and copilot.is_running() then
     return get_spinner(self.options.symbols.spinners)
-  elseif copilot.get_status() == "enabled" then
+  elseif copilot.is_enabled() then
     return self.options.symbols.status.enabled
   else
     return self.options.symbols.status.disabled
