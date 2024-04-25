@@ -66,7 +66,7 @@ function M:init(options)
     desc = "Update copilot attached status",
     callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if client and client.name == "copilot" then
+      if client and client.name == "GitHub Copilot" then
         attached = true
         return true
       end
