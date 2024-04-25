@@ -7,8 +7,8 @@ local M = require("lualine.component"):extend()
 local default_options = {
   symbols = {
     status = {
-      enabled = " ",
-      disabled = " ",
+      enabled = " ",
+      disabled = " ",
     },
     spinners = require("copilot-status.spinners").dots,
   },
