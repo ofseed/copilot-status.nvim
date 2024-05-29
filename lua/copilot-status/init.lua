@@ -13,7 +13,7 @@ end
 ---Show copilot running status
 ---@return boolean
 M.is_running = function()
-  local agent = vim.g.loaded_copilot == 1 and vim.fn["copilot#RunningAgent"]() or nil
+  local agent = vim.g.loaded_copilot == 1 and vim.fn["copilot#RunningClient"]() or nil
   if not agent then
     return false
   end
